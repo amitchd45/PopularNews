@@ -1,4 +1,4 @@
-package com.haerul.popularnews;
+package com.omninouse.popularnews;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -24,22 +24,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.haerul.popularnews.api.ApiClient;
-import com.haerul.popularnews.api.ApiInterface;
-import com.haerul.popularnews.models.Article;
-import com.haerul.popularnews.models.News;
+import com.omninouse.popularnews.api.ApiClient;
+import com.omninouse.popularnews.api.ApiInterface;
+import com.omninouse.popularnews.models.Article;
+import com.omninouse.popularnews.models.News;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayout.OnRefreshListener{
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String API_KEY = "your secret api key";
+    public static final String API_KEY = "e8faf766ea774e149d6ee004b5650938";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private List<Article> articles = new ArrayList<>();
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
 
     }
 
-    public void LoadJson(final String keyword){
+    public void LoadJson(final String keyword) {
 
         errorLayout.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(true);
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
 
         Call<News> call;
 
-        if (keyword.length() > 0 ){
+        if (keyword.length() > 0) {
             call = apiInterface.getNewsSearch(keyword, language, "publishedAt", API_KEY);
         } else {
             call = apiInterface.getNews(country, API_KEY);
@@ -99,9 +98,9 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
         call.enqueue(new Callback<News>() {
             @Override
             public void onResponse(Call<News> call, Response<News> response) {
-                if (response.isSuccessful() && response.body().getArticle() != null){
+                if (response.isSuccessful() && response.body().getArticle() != null) {
 
-                    if (!articles.isEmpty()){
+                    if (!articles.isEmpty()) {
                         articles.clear();
                     }
 
@@ -137,8 +136,8 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
                     showErrorMessage(
                             R.drawable.no_result,
                             "No Result",
-                            "Please Try Again!\n"+
-                            errorCode);
+                            "Please Try Again!\n" +
+                                    errorCode);
 
                 }
             }
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
                 showErrorMessage(
                         R.drawable.oops,
                         "Oops..",
-                        "Network failure, Please Try Again\n"+
+                        "Network failure, Please Try Again\n" +
                                 t.toString());
             }
         });
@@ -158,8 +157,7 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
     }
 
 
-
-    private void initListener(){
+    private void initListener() {
 
         adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
             @Override
@@ -170,12 +168,12 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
                 Article article = articles.get(position);
                 intent.putExtra("url", article.getUrl());
                 intent.putExtra("title", article.getTitle());
-                intent.putExtra("img",  article.getUrlToImage());
-                intent.putExtra("date",  article.getPublishedAt());
-                intent.putExtra("source",  article.getSource().getName());
-                intent.putExtra("author",  article.getAuthor());
+                intent.putExtra("img", article.getUrlToImage());
+                intent.putExtra("date", article.getPublishedAt());
+                intent.putExtra("source", article.getSource().getName());
+                intent.putExtra("author", article.getAuthor());
 
-                Pair<View, String> pair = Pair.create((View)imageView, ViewCompat.getTransitionName(imageView));
+                Pair<View, String> pair = Pair.create((View) imageView, ViewCompat.getTransitionName(imageView));
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         MainActivity.this,
                         pair
@@ -184,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     startActivity(intent, optionsCompat.toBundle());
-                }else {
+                } else {
                     startActivity(intent);
                 }
 
@@ -208,10 +206,9 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (query.length() > 2){
+                if (query.length() > 2) {
                     onLoadingSwipeRefresh(query);
-                }
-                else {
+                } else {
                     Toast.makeText(MainActivity.this, "Type more than two letters!", Toast.LENGTH_SHORT).show();
                 }
                 return false;
@@ -233,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
         LoadJson("");
     }
 
-    private void onLoadingSwipeRefresh(final String keyword){
+    private void onLoadingSwipeRefresh(final String keyword) {
 
         swipeRefreshLayout.post(
                 new Runnable() {
@@ -246,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements  SwipeRefreshLayo
 
     }
 
-    private void showErrorMessage(int imageView, String title, String message){
+    private void showErrorMessage(int imageView, String title, String message) {
 
         if (errorLayout.getVisibility() == View.GONE) {
             errorLayout.setVisibility(View.VISIBLE);

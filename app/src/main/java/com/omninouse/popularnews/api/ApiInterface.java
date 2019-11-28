@@ -1,6 +1,6 @@
-package com.haerul.popularnews.api;
+package com.omninouse.popularnews.api;
 
-import com.haerul.popularnews.models.News;
+import com.omninouse.popularnews.models.News;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

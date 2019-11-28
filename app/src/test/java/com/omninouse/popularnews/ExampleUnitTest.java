@@ -1,4 +1,4 @@
-package com.haerul.popularnews;
+package com.omninouse.popularnews;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.haerul.popularnews.api;
+package com.omninouse.popularnews.api;
 
 import java.security.cert.CertificateException;
 
@@ -23,7 +23,7 @@ public class ApiClient {
         if (retrofit == null){
 
             retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
-                    .client(getUnsafeOkHttpClient().build())
+//                    .client(getUnsafeOkHttpClient().build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
